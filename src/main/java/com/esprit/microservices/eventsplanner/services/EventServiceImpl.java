@@ -3,6 +3,7 @@ package com.esprit.microservices.eventsplanner.services;
 import com.esprit.microservices.eventsplanner.entities.Event;
 import com.esprit.microservices.eventsplanner.interfaces.IEventService;
 import com.esprit.microservices.eventsplanner.repositories.EventRepository;
+import jakarta.ws.rs.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,6 +75,20 @@ public class EventServiceImpl implements IEventService {
     @Override
     public List<Event> retrieveEventsByNumberOfAttendees(Integer numberOfAttendeesCount) {
         return eventRepository.findByNumberOfAttendees(numberOfAttendeesCount);
+    }
+
+
+    /**
+     * after a reservation is created this function is To update numbers of participant
+     * */
+    @Override
+    public void updateAvailableCapacityEvent(Integer eventId, Integer guestNumbers) {
+        Event event =eventRepository.findById(eventId).orElse(null);
+        if (event==null){
+            throw new BadRequestException();
+        }
+        event.setNumbersOfParticipants(event.getNumbersOfParticipants()+guestNumbers);
+        eventRepository.save(event);
     }
 
 

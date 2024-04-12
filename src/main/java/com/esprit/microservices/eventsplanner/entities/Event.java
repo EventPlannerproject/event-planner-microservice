@@ -32,9 +32,11 @@ public class Event implements Serializable {
     private String organizer;
     private String mailAddressOfOrganizer;
     private Integer numberOfAttendees;
+    private Integer numbersOfParticipants;
     private String status;
     private String type;
     private String summary;
+    private Long organizerId;
 
 
 }

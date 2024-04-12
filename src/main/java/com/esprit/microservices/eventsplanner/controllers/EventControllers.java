@@ -49,7 +49,6 @@ public class EventControllers {
         return eventService.retrieveEvent(idEvent);
     }
 
-
     @GetMapping("/retrieveEvents")
     @ResponseStatus(HttpStatus.OK)
     public List<Event> retrieveAllEvents() {

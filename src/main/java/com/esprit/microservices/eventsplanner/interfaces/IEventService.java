@@ -31,4 +31,5 @@ public interface IEventService {
 
     public List<Event> retrieveEventsByNumberOfAttendees(Integer numberOfAttendeesCount);
 
+    void updateAvailableCapacityEvent(Integer eventId, Integer guestNumbers);
 }
