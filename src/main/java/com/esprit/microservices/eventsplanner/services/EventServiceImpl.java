@@ -4,7 +4,7 @@ import com.esprit.microservices.eventsplanner.entities.Event;
 import com.esprit.microservices.eventsplanner.interfaces.IEventService;
 import com.esprit.microservices.eventsplanner.repositories.EventRepository;
 import jakarta.ws.rs.BadRequestException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,10 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class EventServiceImpl implements IEventService {
 
-    @Autowired
-    EventRepository eventRepository;
+    private final EventRepository eventRepository;
+
 
     @Override
     public List<Event> retrieveAllEvents() {
@@ -80,6 +81,7 @@ public class EventServiceImpl implements IEventService {
 
     /**
      * after a reservation is created this function is To update numbers of participant
+     * Also send infos to notification microservice to distribue information
      * */
     @Override
     public void updateAvailableCapacityEvent(Integer eventId, Integer guestNumbers) {
@@ -87,7 +89,6 @@ public class EventServiceImpl implements IEventService {
         if (event==null){
             throw new BadRequestException();
         }
-        event.setNumbersOfParticipants(event.getNumbersOfParticipants()+guestNumbers);
         eventRepository.save(event);
     }
 

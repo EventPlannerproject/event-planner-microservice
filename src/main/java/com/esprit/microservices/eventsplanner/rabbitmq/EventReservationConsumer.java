@@ -15,7 +15,6 @@ public class EventReservationConsumer {
     @RabbitListener(queues = "reservationQueue")
     public void consumeMessage(ReservationResponseMessage reservationResponseMessage){
         System.out.println("reservation"+reservationResponseMessage);
-        //TODO To implement logic when message is sent from reservation (update capacity event here)
         eventService.updateAvailableCapacityEvent(reservationResponseMessage.getEventId(),reservationResponseMessage.getGuestNumbers());
 
 
