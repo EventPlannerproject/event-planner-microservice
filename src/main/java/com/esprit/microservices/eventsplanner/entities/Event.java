@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Event implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -1,5 +1,6 @@
 package com.esprit.microservices.eventsplanner.interfaces;
 
+import com.esprit.microservices.eventsplanner.FullEventResponse;
 import com.esprit.microservices.eventsplanner.entities.Event;
 
 import java.time.LocalDate;
@@ -31,4 +32,5 @@ public interface IEventService {
 
     public List<Event> retrieveEventsByNumberOfAttendees(Integer numberOfAttendeesCount);
 
+    FullEventResponse findEventWithPartners(Integer eventId);
 }

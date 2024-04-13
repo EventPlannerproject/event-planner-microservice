@@ -1,5 +1,6 @@
 package com.esprit.microservices.eventsplanner.controllers;
 
+import com.esprit.microservices.eventsplanner.FullEventResponse;
 import com.esprit.microservices.eventsplanner.entities.Event;
 import com.esprit.microservices.eventsplanner.interfaces.IEventService;
 import jakarta.ws.rs.Consumes;
@@ -7,6 +8,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -101,5 +103,11 @@ public class EventControllers {
             @PathVariable(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate endDate) {
         return eventService.retrieveEventsBetweenTwoDates(startDate, endDate);
+    }
+    @GetMapping("/with-partners/{event-id}")
+    public ResponseEntity<FullEventResponse> findAllEvent(
+            @PathVariable("event-id") Integer eventId
+    ) {
+        return ResponseEntity.ok(eventService.findEventWithPartners(eventId));
     }
 }

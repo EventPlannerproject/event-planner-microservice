@@ -1,5 +1,7 @@
 package com.esprit.microservices.eventsplanner.services;
 
+import com.esprit.microservices.eventsplanner.Client.PartnersClient;
+import com.esprit.microservices.eventsplanner.FullEventResponse;
 import com.esprit.microservices.eventsplanner.entities.Event;
 import com.esprit.microservices.eventsplanner.interfaces.IEventService;
 import com.esprit.microservices.eventsplanner.repositories.EventRepository;
@@ -12,6 +14,8 @@ import java.util.Optional;
 
 @Service
 public class EventServiceImpl implements IEventService {
+    @Autowired
+    private  PartnersClient client;
 
     @Autowired
     EventRepository eventRepository;
@@ -76,5 +80,20 @@ public class EventServiceImpl implements IEventService {
         return eventRepository.findByNumberOfAttendees(numberOfAttendeesCount);
     }
 
-
+    @Override
+    public FullEventResponse findEventWithPartners(Integer eventId) {
+        var event = eventRepository.findById(eventId)
+                .orElse(
+                        Event.builder()
+                                .title("NOT_FOUND")
+                                .description("NOT_FOUND")
+                                .build()
+                );
+        var partner = client.findAllPartnersByEvent(eventId);
+        return FullEventResponse.builder()
+                .title(event.getTitle())
+                .description(event.getDescription())
+                .partner(partner)
+                .build();
+    }
 }
