@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "partners-service" , url = "${application.config.partners-url}")
+@FeignClient(name="partners-service" , url = "${application.config.partners-url}")
 public interface PartnersClient {
 
     @GetMapping("/event/{event-id}")
